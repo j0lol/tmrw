@@ -1,13 +1,10 @@
 use axum::{
     Form, Json,
     extract::State,
-    http::{HeaderMap, HeaderValue, StatusCode, header::SET_COOKIE},
+    http::{HeaderMap, HeaderValue, StatusCode},
     response::Html,
 };
-use axum_cookie::{
-    CookieManager,
-    cookie::{Cookie, CookieJar},
-};
+use axum_cookie::CookieManager;
 use chrono::{DateTime, Days, NaiveDate, Utc};
 use chrono_tz::Tz;
 use serde::{Deserialize, Serialize};

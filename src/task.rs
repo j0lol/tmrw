@@ -7,15 +7,9 @@ use axum::{
     response::{Html, IntoResponse},
 };
 use axum_cookie::CookieManager;
-use chrono::{NaiveDateTime, Utc};
-use chrono_tz::UTC;
 use serde::Deserialize;
 
-use crate::{
-    SqlRes,
-    session::{self, session},
-    state::Spool,
-};
+use crate::{SqlRes, session::session, state::Spool};
 
 struct Task {
     id: u64,
@@ -26,19 +20,17 @@ struct Task {
 
 impl Task {
     fn html(&self) -> String {
-        let date = self.date;
-        let date = date.format("%Y-%m-%d");
         format!(
             r#"
             <li hx-target="this" hx-swap="outerHTML">
-                <span class="{}" hx-get="/task-complete?id={}">{}</span> &nbsp;
+                <span class="{}" hx-get="/task/complete?id={}">{}</span> &nbsp;
 
                 <details name="edit">
                     <summary>edit</summary>
-                    <button hx-get="/delete?id={}"hx-confirm="Are you sure you want to *delete* this item?" >
+                    <button class="button-delete" hx-get="/task/delete?id={}" hx-confirm="Are you sure you want to *delete* this item?" >
                         del
                     </button>
-                    <button hx-get="/tmrw?id={}"hx-confirm="Are you sure you want to move this item to tomorrow? **This feature is not yet implemented**" >
+                    <button class="button-pushback" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow? **This feature is not yet implemented**" >
                         tmrw
                     </button>
                 </details>
@@ -164,8 +156,53 @@ pub async fn check_task(
         .unwrap();
 
     let mut headers = HeaderMap::new();
-    headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
+    // headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
     (headers, task.html())
+}
+
+pub async fn pushback_task(
+    State(pool): Spool,
+    jar: CookieManager,
+    form: Form<HashMap<String, String>>,
+) -> impl IntoResponse {
+    let (user, _jar) = session(State(pool.clone()), jar).await;
+
+    let user = user.expect("Unauthenticated!");
+
+    let id = form.get("id").unwrap().clone();
+
+    let conn = pool.get().await.unwrap();
+    let task: Task = conn
+        .interact(move |conn| {
+            let mut task = conn.query_row(
+                "SELECT rowid, text, date, checked FROM tasks WHERE rowid = ?1",
+                [id.clone()],
+                |row| {
+                    Ok(Task {
+                        id: row.get(0)?,
+                        text: row.get(1)?,
+                        date: row.get(2)?,
+                        checked: row.get(3)?,
+                    })
+                },
+            )?;
+
+            task.date = user.tomorrow();
+
+            conn.execute(
+                "UPDATE tasks SET date = ?1 WHERE rowid = ?2",
+                (task.date, id),
+            )?;
+
+            SqlRes::Ok(task)
+        })
+        .await
+        .unwrap()
+        .unwrap();
+
+    let mut headers = HeaderMap::new();
+    // headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
+    (headers)
 }
 
 #[derive(Deserialize)]

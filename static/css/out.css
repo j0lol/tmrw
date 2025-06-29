@@ -1,33 +1,3 @@
-*, :before, :after {
-  box-sizing: border-box;
-}
-
-.hepta-slab-normal, body {
-  font-optical-sizing: auto;
-  font-family: Hepta Slab, serif;
-  font-style: normal;
-  font-weight: normal;
-}
-
-body {
-  background: #f1f0f5;
-}
-
-.wrapper {
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
-  display: grid;
-}
-
-form.inline {
-  display: inline;
-}
-
-hr {
-  border: 0;
-  border-top: 3px double #000;
-}
-
 article {
   flex-direction: column;
   display: flex;
@@ -66,6 +36,22 @@ article {
 
 .card-head h1:after {
   margin-top: -.3em;
+}
+
+.card-head .headercontainer {
+  display: inline-flex;
+}
+
+.card-head .firstheading {
+  display: inline;
+}
+
+.card-head .otherheading {
+  color: #483d8b;
+  cursor: pointer;
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: underline;
 }
 
 .card {
@@ -161,43 +147,11 @@ article {
   content: ":";
 }
 
-input, button, article {
+.card-head, .card-head input, .card-head button, .card, .card input, .card button {
   font-optical-sizing: auto;
   font-variation-settings: "BNCE" 0, "INFM" 0, "SPAC" 0;
+  font-synthesis: none;
   font-family: Shantell Sans, cursive;
   font-style: normal;
   font-weight: 400;
-}
-
-.headercontainer {
-  display: inline-flex;
-}
-
-.firstheading {
-  display: inline;
-}
-
-.otherheading {
-  color: #483d8b;
-  cursor: pointer;
-  font-style: italic;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-header details {
-  color: #000;
-  font-size: .7rem;
-}
-
-header details summary {
-  color: #000;
-  font-size: 1rem;
-}
-
-footer {
-  color: #696969;
-  margin-top: 2rem;
-  font-size: .7rem;
-  font-style: italic;
 }

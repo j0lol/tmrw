@@ -1,25 +1,18 @@
 use crate::{
     route::{index, today, tomorrow},
-    state::{AppState, Senv},
-    task::{check_task, delete_task, new_task, tasks},
+    state::AppState,
+    task::{check_task, delete_task, new_task, pushback_task, tasks},
     user::{login, new_user, user_slug},
 };
 use axum::{
-    Form, Router,
-    extract::{FromRef, State},
-    http::{HeaderMap, HeaderName, HeaderValue, header},
-    response::{Html, IntoResponse},
-    routing::{get, post, put},
+    Router,
+    routing::{get, post},
 };
 use axum_cookie::CookieLayer;
-use deadpool_sqlite::{Config, Manager, Pool, Runtime};
-use minijinja::{Environment, context, path_loader};
+use deadpool_sqlite::{Config, Runtime};
+use minijinja::{Environment, path_loader};
 use serde::Serialize;
-use std::{
-    collections::HashMap,
-    error::Error,
-    sync::{Arc, RwLock},
-};
+use std::error::Error;
 use tower_http::services::ServeDir;
 
 mod route;
@@ -28,7 +21,6 @@ pub mod state;
 mod task;
 pub mod user;
 
-type Jar = HeaderMap;
 type Res<T> = Result<T, Box<(dyn Error)>>;
 type SqlRes<T> = deadpool_sqlite::rusqlite::Result<T>;
 
@@ -75,17 +67,17 @@ async fn main() -> Res<()> {
         )?;
 
         SqlRes::Ok(())
-        //
     })
     .await??;
 
     // build our application with a route
     let app = Router::new()
         .route("/", get(index))
-        .route("/new", post(new_task))
-        .route("/delete", get(delete_task))
-        .route("/tasks", get(tasks))
-        .route("/task-complete", get(check_task))
+        .route("/task/new", post(new_task))
+        .route("/task/delete", get(delete_task))
+        .route("/task/list", get(tasks))
+        .route("/task/complete", get(check_task))
+        .route("/task/pushback", get(pushback_task))
         .route("/user/new", post(new_user))
         .route("/user/login", post(login))
         .route("/htmx/user_slug", get(user_slug))

@@ -1,0 +1,59 @@
+@import url("fonts.css");
+
+/* Global elements */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Hepta Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    background: #f1f0f5;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+/* Random elements */
+
+hr {
+    border-top: 3px double black;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+form.inline {
+    display: inline;
+}
+
+/* Semantic page layout elements */
+header details {
+    color: black;
+    font-size: 0.7rem;
+
+    summary {
+        color: black;
+        font-size: 1rem;
+    }
+}
+
+footer {
+    margin-top: 2rem;
+    font-style: italic;
+    color: dimgray;
+    font-size: 0.7rem;
+}

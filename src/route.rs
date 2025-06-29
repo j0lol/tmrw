@@ -2,13 +2,8 @@ use crate::{
     out,
     session::session,
     state::{Senv, Spool},
-    user::User,
 };
-use axum::{
-    extract::State,
-    http::{HeaderMap, HeaderName, HeaderValue, header::SET_COOKIE},
-    response::Html,
-};
+use axum::{extract::State, response::Html};
 use axum_cookie::CookieManager;
 use minijinja::context;
 

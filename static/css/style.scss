@@ -1,36 +1,8 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
+/* For annoying layout stuffs */
 
-.hepta-slab-normal,
-body {
-    font-family: "Hepta Slab", serif;
-    font-optical-sizing: auto;
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    background: #f1f0f5;
-}
-
-.wrapper {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-}
-
-form.inline {
-    display: inline;
-}
-
-@mixin text-crop(
-    $line-height: 1.3,
+@mixin text-crop($line-height: 1.3,
     $top-adjustment: 0px,
-    $bottom-adjustment: 0px
-) {
+    $bottom-adjustment: 0px) {
     // Configured in Step 1
     $top-crop: 9;
     $bottom-crop: 9;
@@ -38,22 +10,10 @@ form.inline {
     $crop-line-height: 1.2;
 
     // Apply values to calculate em-based margins that work with any font size
-    $dynamic-top-crop: max(
-            (
-                $top-crop + ($line-height - $crop-line-height) *
-                    ($crop-font-size / 2)
-            ),
-            0
-        ) /
-        $crop-font-size;
-    $dynamic-bottom-crop: max(
-            (
-                $bottom-crop + ($line-height - $crop-line-height) *
-                    ($crop-font-size / 2)
-            ),
-            0
-        ) /
-        $crop-font-size;
+    $dynamic-top-crop: max(($top-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)),
+            0) / $crop-font-size;
+    $dynamic-bottom-crop: max(($bottom-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)),
+            0) / $crop-font-size;
 
     // Mixin output
     line-height: $line-height;
@@ -74,6 +34,7 @@ form.inline {
         margin-top: calc(-#{$dynamic-bottom-crop}em + #{$bottom-adjustment});
     }
 }
+
 // Mixin generated at: http://text-crop.eightshapes.com/?typeface-selection=custom-font&typeface=Seymour%20One&custom-typeface-name=Shantell%20Sans&custom-typeface-url=&custom-typeface-weight=400&custom-typeface-style=normal&weight-and-style=regular&size=36&line-height=1.2&top-crop=9&bottom-crop=9
 
 /* Usage Examples
@@ -109,12 +70,9 @@ form.inline {
     }
 */
 
-hr {
-    border-top: 3px double black;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
-}
+
+
+
 article {
     display: flex;
     flex-direction: column;
@@ -128,13 +86,11 @@ article {
     /* https://projects.verou.me/css3patterns/#lined-paper */
     background-color: #fff;
     background-image:
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             transparent var(--rule-start),
             #abced4 var(--rule-start),
             #abced4 calc(var(--rule-start) + 2px),
-            transparent calc(var(--rule-start) + 2px)
-        ),
+            transparent calc(var(--rule-start) + 2px)),
         linear-gradient(#eee 0.1em, transparent 0.1em);
     background-size: 100% 2.6rem;
     padding-top: 1.3rem;
@@ -142,12 +98,31 @@ article {
     .headercontainer {
         margin-left: calc(var(--text-start) + var(--rule-start));
     }
+
     h1 {
         @include text-crop;
         font-size: 32px;
         margin: -2px 0 0 0;
     }
+
+
+    .headercontainer {
+        display: inline-flex;
+    }
+
+    .firstheading {
+        display: inline;
+    }
+
+    .otherheading {
+        font-weight: 700;
+        color: darkslateblue;
+        font-style: italic;
+        text-decoration: underline;
+        cursor: pointer;
+    }
 }
+
 .card {
     position: relative;
     --rule-start: 2rem;
@@ -156,13 +131,11 @@ article {
     /* https://projects.verou.me/css3patterns/#lined-paper */
     background-color: #fff;
     background-image:
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             transparent var(--rule-start),
             #abced4 var(--rule-start),
             #abced4 calc(var(--rule-start) + 2px),
-            transparent calc(var(--rule-start) + 2px)
-        ),
+            transparent calc(var(--rule-start) + 2px)),
         linear-gradient(#eee 0.1em, transparent 0.1em);
     background-size: 100% 21px;
 
@@ -171,6 +144,7 @@ article {
     p {
         margin: 0;
     }
+
     p {
         @include text-crop;
         font-size: 16px;
@@ -186,6 +160,7 @@ article {
     button {
         cursor: pointer;
     }
+
     p,
     form.addtodo {
         display: flex;
@@ -194,12 +169,14 @@ article {
         margin-left: calc(var(--text-start) + var(--rule-start));
         margin-top: 2px;
     }
+
     input {
         font-size: 16px;
         /* field-sizing: content; */
         margin-right: 1rem;
         max-width: 15ch;
     }
+
     button,
     input,
     form:not(.addtodo) {
@@ -208,11 +185,13 @@ article {
         border: 0;
         background: 0;
     }
+
     ul {
         margin: 0;
         padding-inline-start: calc(var(--text-start) + var(--rule-start));
         display: flex;
         flex-direction: column;
+
         li {
             height: 21px;
 
@@ -223,64 +202,41 @@ article {
                 font-weight: lighter;
             }
 
-            /* p:has(+ details) {
-                display: inline;
-            } */
             details {
                 display: inline-flex;
                 flex-direction: row;
                 gap: 0.5rem;
             }
+
             summary {
                 cursor: pointer;
                 display: inline;
             }
+
             details[open] summary:after {
                 content: ":";
             }
         }
     }
 }
-input,
-button,
-article {
-    /**/
-    font-family: "Shantell Sans", cursive;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-        "BNCE" 0,
-        "INFM" 0,
-        "SPAC" 0;
-}
 
-.headercontainer {
-    display: inline-flex;
-}
-.firstheading {
-    display: inline;
-}
-.otherheading {
-    font-weight: 700;
-    color: darkslateblue;
-    font-style: italic;
-    text-decoration: underline;
-    cursor: pointer;
-}
+.card-head,
+.card {
 
-header details {
-    color: black;
-    font-size: 0.7rem;
+    &,
+    input,
+    button {
+        /**/
+        font-family: "Shantell Sans", cursive;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings:
+            "BNCE" 0,
+            "INFM" 0,
+            "SPAC" 0;
 
-    summary {
-        color: black;
-        font-size: 1rem;
+        font-synthesis: none;
     }
-}
-footer {
-    margin-top: 2rem;
-    font-style: italic;
-    color: dimgray;
-    font-size: 0.7rem;
+
 }
