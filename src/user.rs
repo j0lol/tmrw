@@ -136,7 +136,7 @@ pub async fn user_slug(State(pool): Spool, jar: CookieManager) -> Html<String> {
 
     if let Some(user) = user {
         Html(format!(
-            "You are logged in. Your user ID is {}. <br> You are in timezone {}. <br> Your login code is <samp>{}</samp>. <br> Use this to log in on other devices.",
+            "You are logged in. Your user ID is {}. <br> You are in timezone {}. <br><br> Your login code is <samp><input value=\"{}\" readonly></samp>. <br> Use this to log in on other devices. If you want to ensure your tasks are saved, write this code down.",
             user.id, user.timezone, user.pass
         ))
     } else {

@@ -246,6 +246,15 @@ article {
     cursor: pointer;
 }
 
+header details {
+    color: black;
+    font-size: 0.7rem;
+
+    summary {
+        color: black;
+        font-size: 1rem;
+    }
+}
 footer {
     margin-top: 2rem;
     font-style: italic;

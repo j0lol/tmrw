@@ -164,6 +164,16 @@ input, button, article {
   text-decoration: underline;
 }
 
+header details {
+  color: #000;
+  font-size: .7rem;
+}
+
+header details summary {
+  color: #000;
+  font-size: 1rem;
+}
+
 footer {
   color: #696969;
   margin-top: 2rem;

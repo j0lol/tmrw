@@ -10,9 +10,10 @@ content %}
                 hx-trigger="login from:body, load"
                 hx-swap="innerHTML"
             ></div>
+            <br />
             <form hx-post="/user/login" hx-swap="none">
-                <label>Login with code: <input name="pass" /></label>
-                <button>Ok</button>
+                <label>Login with code: <br /><input name="pass" /></label>
+                <br /><button>Ok</button>
             </form>
         </details>
     </header>
@@ -32,21 +33,39 @@ content %}
         .task-label:hover {
             text-decoration: line-through;
             text-decoration-style: dashed;
-            text-decoration-color: indianred;
+            /* text-decoration-color: indianred; */
             text-decoration-thickness: 2px;
         }
 
         .task-label.checked:hover {
             text-decoration-style: solid;
-            text-decoration-color: indianred;
+            /* text-decoration-color: indianred; */
+        }
+
+        .task-label:active,
+        .task-label.checked:active {
+            text-decoration-color: black;
         }
     </style>
     <footer>
         <p>
             An attempt at an ADHD friendly todo list. <br />
             This website was MVP'd in one day, styling and all. <br />
-            Acknowledgements:
+
+            Explanation:
         </p>
+
+        <ul>
+            <li>Add items to your list</li>
+            <li>If you make a mistake, press [x] to remove it</li>
+            <li>Once you complete a task, tap it to cross it out.</li>
+            <li>Bask in your achievements!</li>
+            <li>
+                Every day, at 00:00 in your local time, items from tomorrow will
+                move to today.
+            </li>
+        </ul>
+        <p>Acknowledgements:</p>
         <ul>
             <li>Axum for a lovely Rust webserver</li>
             <li>HTMX for stupid easy prototyping</li>
@@ -61,7 +80,10 @@ content %}
             </li>
         </ul>
 
-        <p>Developed by <a href="https://j0.lol">j0</a></p>
+        <p>
+            Developed by <a href="https://j0.lol">j0</a>.
+            <a href="https://github.com/j0lol/tmrw">Source code</a>
+        </p>
     </footer>
 </div>
 
