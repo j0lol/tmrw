@@ -11,3 +11,14 @@ Of course, this cannot model everything that one can do. Calendars exist for a r
 This software was developed for myself, but I hope it can be enjoyed by other people. If you have experiences with the software that you would like to share, [please do so](https://j0.lol/contact).
 
 To help with comprehension, everything is dead simple. Every time you visit the website, you are given a login code. Go onto another device and submit the login code to share the same list. This is an easy way to share a login without having to deal with email, usernames, passwords, etc.
+
+## Usage
+
+Build system is kept intentionally light. While `sass` is used for CSS-preprocessing, the processing is done within a Rust dependency, so you do not need the Node tool for building the project.
+
+You need the Rust toolchain to run this project. [Rustup](https://rustup.rs) will get you setup with that, if needed.
+```
+PORT=2999 cargo run -r
+```
+
+Default port is 3000.
