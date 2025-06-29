@@ -1,6 +1,6 @@
 # tmrw
 
-A virtual TODO list.
+A virtual TODO list. Online at <https://tmrw.j0.lol>.
 
 ![screenshot of the app. a virtual piece of paper has a list of items to do on them. some are crossed out.](image.png)
 
