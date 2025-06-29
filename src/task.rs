@@ -32,9 +32,16 @@ impl Task {
             r#"
             <li hx-target="this" hx-swap="outerHTML">
                 <span class="{}" hx-get="/task-complete?id={}">{}</span> &nbsp;
-                <button hx-get="/delete?id={}"hx-confirm="Are you sure you want to *delete* this item?" >
-                    [x]
-                </button>
+
+                <details name="edit">
+                    <summary>edit</summary>
+                    <button hx-get="/delete?id={}"hx-confirm="Are you sure you want to *delete* this item?" >
+                        del
+                    </button>
+                    <button hx-get="/tmrw?id={}"hx-confirm="Are you sure you want to move this item to tomorrow? **This feature is not yet implemented**" >
+                        tmrw
+                    </button>
+                </details>
             </li>
             "#,
             if self.checked {
@@ -44,6 +51,7 @@ impl Task {
             },
             self.id,
             self.text,
+            self.id,
             self.id,
         )
     }

@@ -215,6 +215,29 @@ article {
         flex-direction: column;
         li {
             height: 21px;
+
+            button,
+            details {
+                color: gray;
+                font-size: 10pt;
+                font-weight: lighter;
+            }
+
+            /* p:has(+ details) {
+                display: inline;
+            } */
+            details {
+                display: inline-flex;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+            summary {
+                cursor: pointer;
+                display: inline;
+            }
+            details[open] summary:after {
+                content: ":";
+            }
         }
     }
 }
