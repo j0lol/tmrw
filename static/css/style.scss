@@ -164,7 +164,7 @@ article {
             transparent calc(var(--rule-start) + 2px)
         ),
         linear-gradient(#eee 0.1em, transparent 0.1em);
-    background-size: 100% 1.3em;
+    background-size: 100% 21px;
 
     padding-bottom: calc(2.4em + 0.5px);
 
@@ -214,7 +214,7 @@ article {
         display: flex;
         flex-direction: column;
         li {
-            height: 1.3em;
+            height: 21px;
         }
     }
 }
