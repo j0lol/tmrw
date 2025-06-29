@@ -15,7 +15,7 @@ function check_invalidate() {
   if (Cookies.get("invalidate") === "true") {
     new_user().then(() => {
       console.log("account created!");
-      // Cookies.remove("invalidate");
+      Cookies.remove("invalidate");
       htmx.trigger("body", "login", {});
     });
   }
