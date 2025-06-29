@@ -166,7 +166,7 @@ article {
         linear-gradient(#eee 0.1em, transparent 0.1em);
     background-size: 100% 1.3em;
 
-    padding-bottom: 2.4em;
+    padding-bottom: calc(2.4em + 1px);
 
     p {
         margin: 0;
