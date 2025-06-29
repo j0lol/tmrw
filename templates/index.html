@@ -1,0 +1,73 @@
+{% extends "wrap.html" %} {% block title %}{{ super() }}{% endblock %} {% block
+content %}
+
+<div>
+    <header>
+        <details>
+            <summary>Authentication</summary>
+            <div
+                hx-get="/htmx/user_slug"
+                hx-trigger="login from:body, load"
+                hx-swap="innerHTML"
+            ></div>
+            <form hx-post="/user/login" hx-swap="none">
+                <label>Login with code: <input name="pass" /></label>
+                <button>Ok</button>
+            </form>
+        </details>
+    </header>
+
+    <hr />
+
+    <article id="main">{% include "fragment-todaylist.html" %}</article>
+
+    <!-- SASS hates these rules. -->
+    <style>
+        .task-label.checked {
+            text-decoration: line-through;
+            text-decoration-style: solid;
+            text-decoration-thickness: 2px;
+        }
+
+        .task-label:hover {
+            text-decoration: line-through;
+            text-decoration-style: dashed;
+            text-decoration-color: indianred;
+            text-decoration-thickness: 2px;
+        }
+
+        .task-label.checked:hover {
+            text-decoration-style: solid;
+            text-decoration-color: indianred;
+        }
+    </style>
+    <footer>
+        <p>
+            An attempt at an ADHD friendly todo list. <br />
+            This website was MVP'd in one day, styling and all. <br />
+            Acknowledgements:
+        </p>
+        <ul>
+            <li>Axum for a lovely Rust webserver</li>
+            <li>HTMX for stupid easy prototyping</li>
+            <li>
+                This lovely paper background.
+                <a href="https://projects.verou.me/css3patterns/#lined-paper"
+                    >Thanks!</a
+                >
+            </li>
+            <li>
+                My mum, who gave me this idea. In analogue form, that is. &lt;3
+            </li>
+        </ul>
+
+        <p>Developed by <a href="https://j0.lol">j0</a></p>
+    </footer>
+</div>
+
+<script>
+    if (Cookies.get("invalidate") === "true") {
+        console.log("hi");
+    }
+</script>
+{% endblock %}

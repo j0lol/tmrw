@@ -1,0 +1,41 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+
+        <!-- I hate the current Cookie API, and the new one is secure-context only -->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@1..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- local styles -->
+        <link rel="stylesheet" href="/static/css/out.css" />
+        <style>
+            {{ css }}
+        </style>
+        <script src="/static/js/script.js"></script>
+
+        <link rel="icon" href="/static/img/favicon.ico" sizes="any" />
+        <!-- 32×32 -->
+
+        {% block head_extra %}{% endblock %}
+
+        <title>{% block title %}TMRW{% endblock %}</title>
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <div class="wrapper">
+            {% block content %}🌵🏜️{% endblock %} {% block footer %}
+            <!-- <footer>Footer.</footer> -->
+            {% endblock %}
+        </div>
+    </body>
+</html>

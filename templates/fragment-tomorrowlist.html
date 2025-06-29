@@ -1,0 +1,40 @@
+<div class="card-head">
+    <div class="headercontainer">
+        <h1 class="firstheading">Tomorrow</h1>
+    </div>
+    <a
+        class="otherheading"
+        hx-get="/htmx/today"
+        hx-target="#main"
+        hx-trigger="click"
+        >Today</a
+    >
+</div>
+
+<div class="card">
+    <form
+        class="addtodo"
+        hx-post="/new"
+        hx-swap="none"
+        hx-on::after-request="if(event.detail.successful) this.reset()"
+    >
+        <input name="when" type="hidden" value="tomorrow" />
+        <label
+            >I will...
+            <input
+                required
+                size="20"
+                name="text"
+                type="text"
+                placeholder="do good"
+        /></label>
+        &nbsp;
+        <button>[Ok]</button>
+    </form>
+
+    <ul
+        hx-get="/tasks?when=tomorrow"
+        hx-trigger="taskCreated from:body, taskDeleted from:body, load"
+        hx-swap="innerHTML"
+    ></ul>
+</div>
