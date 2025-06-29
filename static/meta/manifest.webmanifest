@@ -1,0 +1,28 @@
+{
+    "name": "TMRW",
+    "display": "standalone",
+    "background_color": "#f1f0f5",
+    "theme_color": "#2d1c76",
+    "icons": [
+        {
+            "src": "/static/img/tmrw-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/static/img/tmrw-mask-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/static/img/tmrw-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "categories": [
+        "productivity",
+        "utilities"
+    ]
+}
