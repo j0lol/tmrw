@@ -30,7 +30,7 @@ impl Task {
                     <button class="button-delete" hx-get="/task/delete?id={}" hx-confirm="Are you sure you want to *delete* this item?" >
                         del
                     </button>
-                    <button class="button-pushback" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow? **This feature is not yet implemented**" >
+                    <button class="button-pushback" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow?" >
                         tmrw
                     </button>
                 </details>
