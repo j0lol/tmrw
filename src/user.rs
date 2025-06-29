@@ -60,7 +60,7 @@ pub async fn login(
     let userid = conn
         .interact(move |conn| {
             let mut stmt = conn.prepare("SELECT (rowid) FROM users  WHERE password = ?1")?;
-            let userid: u32 = stmt.query_row([payload.pass], |row| row.get(0))?;
+            let userid: u32 = stmt.query_row([payload.pass.trim()], |row| row.get(0))?;
 
             SqlRes::Ok(userid)
         })

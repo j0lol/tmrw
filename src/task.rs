@@ -74,7 +74,8 @@ pub async fn new_task(
 
     let user = user.expect("Unauthenticated!");
 
-    let text = form.text.clone();
+    let text: String = form.text.clone();
+    let text: String = text.trim().to_string();
 
     let date = match form.when {
         TaskWhen::Today => user.today(),
