@@ -135,7 +135,7 @@ article {
 
     @include ruled_background(21px);
 
-    padding-bottom: calc(2.4em + 0.5px);
+    height: 42px;
 
     p {
         margin: 0;
@@ -185,42 +185,95 @@ article {
         color: light-dark(gray, lightgray);
     }
 
+}
+
+.card-body {
+    $my-text-nudge: 17px;
+    $my-line-height: 21px;
+
+    --rule-start: 2rem;
+    --text-start: 0.3rem;
+    @include ruled_background(100%);
+    background-repeat: no-repeat;
+
+    padding-top: calc($my-line-height - $my-text-nudge);
+    padding-bottom: calc($my-text-nudge);
+
+
     ul {
         margin: 0;
-        padding-inline-start: calc(var(--text-start) + var(--rule-start));
         display: flex;
         flex-direction: column;
+        padding: 0;
 
-        li {
-            height: 21px;
+        .list-item {
 
-            button,
-            details {
-                color: light-dark(gray, lightgray);
-                font-size: 10pt;
-                font-weight: lighter;
+            position: relative;
+
+            &:after {
+                content: '◦';
+                position: absolute;
+                left: 18px;
+                top: -3px;
             }
 
-            details {
-                display: inline-flex;
-                flex-direction: row;
-                gap: 0.5rem;
-            }
+            @include ruled_background($my-line-height);
+            background-position: 0px $my-text-nudge;
 
-            summary {
-                cursor: pointer;
-                display: inline;
-            }
+            display: block;
 
-            details[open] summary:after {
-                content: ":";
+            // li:before {
+            //     content: '• ';
+            //     position: absolute;
+            // }
+
+            li {
+                position: relative;
+                list-style-type: none;
+                word-break: break-all;
+
+                padding-inline-start: calc(var(--text-start) + var(--rule-start));
+
+
+                button,
+                details {
+                    color: light-dark(gray, lightgray);
+                    font-size: 10pt;
+                    font-weight: lighter;
+                }
+
+                button,
+                input,
+                form:not(.addtodo) {
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    background: 0;
+                }
+
+                details {
+                    display: inline-flex;
+                    flex-direction: row;
+                    gap: 0.5rem;
+                }
+
+                summary {
+                    cursor: pointer;
+                    display: inline;
+                }
+
+                details[open] summary:after {
+                    content: ":";
+                }
             }
         }
+
     }
 }
 
 .card-head,
-.card {
+.card,
+.card-body {
 
     &,
     input,

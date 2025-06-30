@@ -60,7 +60,7 @@ article {
   background-color: light-dark(#fff, #000);
   background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
   background-size: 100% 21px;
-  padding-bottom: calc(2.4em + .5px);
+  height: 42px;
   position: relative;
 }
 
@@ -119,39 +119,76 @@ article {
   color: light-dark(gray, #d3d3d3);
 }
 
-.card ul {
+.card-body {
+  --rule-start: 2rem;
+  --text-start: .3rem;
+  background-color: light-dark(#fff, #000);
+  background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding-top: 4px;
+  padding-bottom: 17px;
+}
+
+.card-body ul {
   flex-direction: column;
   margin: 0;
-  padding-inline-start: calc(var(--text-start)  + var(--rule-start));
+  padding: 0;
   display: flex;
 }
 
-.card ul li {
-  height: 21px;
+.card-body ul .list-item {
+  background-color: light-dark(#fff, #000);
+  background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+  background-position: 0 17px;
+  background-size: 100% 21px;
+  display: block;
+  position: relative;
 }
 
-.card ul li button, .card ul li details {
+.card-body ul .list-item:after {
+  content: "◦";
+  position: absolute;
+  top: -3px;
+  left: 18px;
+}
+
+.card-body ul .list-item li {
+  word-break: break-all;
+  padding-inline-start: calc(var(--text-start)  + var(--rule-start));
+  list-style-type: none;
+  position: relative;
+}
+
+.card-body ul .list-item li button, .card-body ul .list-item li details {
   color: light-dark(gray, #d3d3d3);
   font-size: 10pt;
   font-weight: lighter;
 }
 
-.card ul li details {
+.card-body ul .list-item li button, .card-body ul .list-item li input, .card-body ul .list-item li form:not(.addtodo) {
+  background: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.card-body ul .list-item li details {
   flex-direction: row;
   gap: .5rem;
   display: inline-flex;
 }
 
-.card ul li summary {
+.card-body ul .list-item li summary {
   cursor: pointer;
   display: inline;
 }
 
-.card ul li details[open] summary:after {
+.card-body ul .list-item li details[open] summary:after {
   content: ":";
 }
 
-.card-head, .card-head input, .card-head button, .card, .card input, .card button {
+.card-head, .card-head input, .card-head button, .card, .card input, .card button, .card-body, .card-body input, .card-body button {
   font-optical-sizing: auto;
   font-variation-settings: "BNCE" 0, "INFM" 0, "SPAC" 0;
   font-synthesis: none;

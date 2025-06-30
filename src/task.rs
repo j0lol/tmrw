@@ -22,6 +22,7 @@ impl Task {
     fn html(&self) -> String {
         format!(
             r#"
+            <div class="list-item">
             <li hx-target="this" hx-swap="outerHTML">
                 <span class="{}" hx-get="/task/complete?id={}">{}</span> &nbsp;
 
@@ -35,6 +36,7 @@ impl Task {
                     </button>
                 </details>
             </li>
+            </div>
             "#,
             if self.checked {
                 "task-label checked"
