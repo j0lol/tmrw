@@ -70,8 +70,21 @@
     }
 */
 
+@mixin ruled_background($line-height) {
 
+    $rule-color: light-dark(#abced4, #c86363);
 
+    /* https://projects.verou.me/css3patterns/#lined-paper */
+    background-color: light-dark(white, black);
+    background-image:
+        linear-gradient(90deg,
+            transparent var(--rule-start),
+            $rule-color var(--rule-start),
+            $rule-color calc(var(--rule-start) + 2px),
+            transparent calc(var(--rule-start) + 2px)),
+        linear-gradient(light-dark(#eee, #333) 0.1em, transparent 0.1em);
+    background-size: 100% $line-height;
+}
 
 article {
     display: flex;
@@ -83,16 +96,8 @@ article {
     --rule-start: 2rem;
     --text-start: 0.3rem;
 
-    /* https://projects.verou.me/css3patterns/#lined-paper */
-    background-color: #fff;
-    background-image:
-        linear-gradient(90deg,
-            transparent var(--rule-start),
-            #abced4 var(--rule-start),
-            #abced4 calc(var(--rule-start) + 2px),
-            transparent calc(var(--rule-start) + 2px)),
-        linear-gradient(#eee 0.1em, transparent 0.1em);
-    background-size: 100% 2.6rem;
+    @include ruled_background(2.6rem);
+
     padding-top: 1.3rem;
 
     .headercontainer {
@@ -116,7 +121,7 @@ article {
 
     .otherheading {
         font-weight: 700;
-        color: darkslateblue;
+        color: light-dark(darkslateblue, #a498f0);
         font-style: italic;
         text-decoration: underline;
         cursor: pointer;
@@ -128,16 +133,7 @@ article {
     --rule-start: 2rem;
     --text-start: 0.3rem;
 
-    /* https://projects.verou.me/css3patterns/#lined-paper */
-    background-color: #fff;
-    background-image:
-        linear-gradient(90deg,
-            transparent var(--rule-start),
-            #abced4 var(--rule-start),
-            #abced4 calc(var(--rule-start) + 2px),
-            transparent calc(var(--rule-start) + 2px)),
-        linear-gradient(#eee 0.1em, transparent 0.1em);
-    background-size: 100% 21px;
+    @include ruled_background(21px);
 
     padding-bottom: calc(2.4em + 0.5px);
 
@@ -172,7 +168,6 @@ article {
 
     input {
         font-size: 16px;
-        /* field-sizing: content; */
         margin-right: 1rem;
         max-width: 15ch;
     }
@@ -186,6 +181,10 @@ article {
         background: 0;
     }
 
+    input::placeholder {
+        color: light-dark(gray, lightgray);
+    }
+
     ul {
         margin: 0;
         padding-inline-start: calc(var(--text-start) + var(--rule-start));
@@ -197,7 +196,7 @@ article {
 
             button,
             details {
-                color: gray;
+                color: light-dark(gray, lightgray);
                 font-size: 10pt;
                 font-weight: lighter;
             }

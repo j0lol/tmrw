@@ -8,12 +8,17 @@
     box-sizing: border-box;
 }
 
+:root {
+    color-scheme: light dark;
+}
+
 body {
     font-family: "Hepta Slab", serif;
     font-optical-sizing: auto;
     font-weight: normal;
     font-style: normal;
-    background: #f1f0f5;
+    background: light-dark(#f1f0f5, hsl(252 20% 5% / 1));
+    color: light-dark(black, white);
 }
 
 .wrapper {
@@ -25,7 +30,7 @@ body {
 /* Random elements */
 
 hr {
-    border-top: 3px double black;
+    border-top: 3px double light-dark(black, white);
     border-bottom: 0;
     border-left: 0;
     border-right: 0;
@@ -42,11 +47,11 @@ form.inline {
 
 /* Semantic page layout elements */
 header details {
-    color: black;
+    color: light-dark(black, white);
     font-size: 0.7rem;
 
     summary {
-        color: black;
+        color: light-dark(black, white);
         font-size: 1rem;
     }
 }
@@ -54,6 +59,26 @@ header details {
 footer {
     margin-top: 2rem;
     font-style: italic;
-    color: dimgray;
+    color: light-dark(dimgray, rgb(202, 202, 202));
     font-size: 0.7rem;
+}
+
+
+article {
+    border: 2px solid light-dark(#eee, #333);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: 3px 5px 5px light-dark(lightgray, rgb(59, 59, 59));
+    box-sizing: border-box;
+}
+
+.otherheading,
+.firstheading {
+    font-weight: 500;
+}
+
+.task-label.checked {
+    text-decoration: line-through;
+    text-decoration-style: solid;
+    text-decoration-thickness: 2px;
 }

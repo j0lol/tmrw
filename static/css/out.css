@@ -6,8 +6,8 @@ article {
 .card-head {
   --rule-start: 2rem;
   --text-start: .3rem;
-  background-color: #fff;
-  background-image: linear-gradient(90deg, transparent var(--rule-start), #abced4 var(--rule-start), #abced4 calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(#eee .1em, transparent .1em);
+  background-color: light-dark(#fff, #000);
+  background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
   background-size: 100% 2.6rem;
   height: 3.9rem;
   padding-top: 1.3rem;
@@ -47,7 +47,7 @@ article {
 }
 
 .card-head .otherheading {
-  color: #483d8b;
+  color: light-dark(#483d8b, #a498f0);
   cursor: pointer;
   font-style: italic;
   font-weight: 700;
@@ -57,8 +57,8 @@ article {
 .card {
   --rule-start: 2rem;
   --text-start: .3rem;
-  background-color: #fff;
-  background-image: linear-gradient(90deg, transparent var(--rule-start), #abced4 var(--rule-start), #abced4 calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(#eee .1em, transparent .1em);
+  background-color: light-dark(#fff, #000);
+  background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start)  + 2px), transparent calc(var(--rule-start)  + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
   background-size: 100% 21px;
   padding-bottom: calc(2.4em + .5px);
   position: relative;
@@ -115,6 +115,10 @@ article {
   padding: 0;
 }
 
+.card input::placeholder {
+  color: light-dark(gray, #d3d3d3);
+}
+
 .card ul {
   flex-direction: column;
   margin: 0;
@@ -127,7 +131,7 @@ article {
 }
 
 .card ul li button, .card ul li details {
-  color: gray;
+  color: light-dark(gray, #d3d3d3);
   font-size: 10pt;
   font-weight: lighter;
 }
