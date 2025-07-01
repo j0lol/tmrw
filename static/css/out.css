@@ -15,6 +15,37 @@ article {
 
 .card-head .headercontainer {
   margin-left: calc(var(--text-start)  + var(--rule-start));
+  gap: .5em;
+}
+
+.card-head .headercontainer button {
+  background: 0;
+  border: 0;
+  margin: -2px 0 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.3;
+  text-decoration: underline;
+}
+
+.card-head .headercontainer button:before, .card-head .headercontainer button:after {
+  content: "";
+  width: 0;
+  height: 0;
+  display: block;
+}
+
+.card-head .headercontainer button:before {
+  margin-bottom: -.3em;
+}
+
+.card-head .headercontainer button:after {
+  margin-top: -.3em;
+}
+
+.card-head .headercontainer button:not([active]) {
+  color: gray;
+  font-style: italic;
 }
 
 .card-head h1 {

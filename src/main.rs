@@ -1,5 +1,5 @@
 use crate::{
-    route::{index, today, tomorrow},
+    route::index,
     state::AppState,
     task::{check_task, delete_task, new_task, pushback_task, tasks},
     user::{login, new_user, user_slug},
@@ -31,7 +31,7 @@ async fn main() -> Res<()> {
         .parse()
         .unwrap();
 
-    let css = turf::style_sheet_values!("./static/css/style.scss").0;
+    let _css = turf::style_sheet_values!("./static/css/style.scss").0;
 
     let env = template();
 
@@ -81,8 +81,6 @@ async fn main() -> Res<()> {
         .route("/user/new", post(new_user))
         .route("/user/login", post(login))
         .route("/htmx/user_slug", get(user_slug))
-        .route("/htmx/today", get(today))
-        .route("/htmx/tomorrow", get(tomorrow))
         .nest_service("/static", ServeDir::new("static"))
         .with_state(AppState { env, pool })
         .layer(CookieLayer::default());

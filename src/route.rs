@@ -16,11 +16,3 @@ pub async fn index(jar: CookieManager, State(env): Senv, State(pool): Spool) -> 
 
     Html(out)
 }
-
-pub async fn today() -> Html<&'static str> {
-    Html(include_str!("../templates/fragment-todaylist.html"))
-}
-
-pub async fn tomorrow() -> Html<&'static str> {
-    Html(include_str!("../templates/fragment-tomorrowlist.html"))
-}

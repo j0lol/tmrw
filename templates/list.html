@@ -1,0 +1,74 @@
+<script type="text/hyperscript">
+  def today(i)
+    tell #main
+    set @day to "today"
+
+    tell #input-when
+    set @value to "today"
+  end
+
+  def tomorrow(i)
+    tell #main
+    set @day to "tomorrow"
+
+    tell #input-when
+    set @value to "tomorrow"
+  end
+</script>
+
+<style>
+    article[day="today"] {
+        .tomorrow {
+            display: none;
+        }
+    }
+
+    article[day="tomorrow"] {
+        .today {
+            display: none;
+        }
+    }
+</style>
+<article day="today" id="main">
+
+    <div class="card-head">
+        <div role="tablist" class="headercontainer">
+            <button active role="tab" class="header-today" _="
+                on click today()
+                add @active
+                tell next <button/>
+                remove @active">Today</button>
+            <button role="tab" class="header-tomorrow" _="
+                on click tomorrow()
+                add @active
+                tell previous <button/>
+                remove @active">
+                Tomorrow
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <form class="addtodo" hx-post="/task/new" hx-swap="none"
+            hx-on::after-request="if(event.detail.successful) this.reset()">
+            <input id="input-when" name="when" type="hidden" value="today" />
+            <label>I will...
+                <input required size="20" name="text" type="text" placeholder="do good" /></label>
+            &nbsp;
+            <button>[Ok]</button>
+        </form>
+
+
+    </div>
+
+    <div class="card-body today">
+        <ul hx-get="/task/list?when=today"
+            hx-trigger="taskCreated from:body, taskDeleted from:body, login from:body, load" hx-swap="innerHTML"></ul>
+    </div>
+
+
+    <div class="card-body tomorrow">
+        <ul hx-get="/task/list?when=tomorrow"
+            hx-trigger="taskCreated from:body, taskDeleted from:body, login from:body, load" hx-swap="innerHTML"></ul>
+    </div>
+</article>

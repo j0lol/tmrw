@@ -6,6 +6,7 @@
 
     <!-- Selfhosted JS -->
     <script src="/static/js/npm/htmx.min.js"></script> <!-- https://www.npmjs.com/package/htmx.org -->
+    <script src="/static/js/npm/hyperscript.min.js"></script> <!-- hyperscript -->
     <script src="/static/js/npm/js.cookie.min.js"></script> <!--  https://www.npmjs.com/package/js-cookie -->
     <!-- I hate the current Cookie API, and the new one is secure-context only -->
 
@@ -23,7 +24,7 @@
     <!-- PWA metadata -->
     <link rel="manifest" href="/static/meta/manifest.webmanifest">
 
-
+    <meta name="htmx-config" content='{"requestClass": "is-loading"}' />
     {% block head_extra %}{% endblock %}
 
     <title>{% block title %}TMRW{% endblock %}</title>

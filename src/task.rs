@@ -31,7 +31,7 @@ impl Task {
                     <button class="button-delete" hx-get="/task/delete?id={}" hx-confirm="Are you sure you want to *delete* this item?" >
                         del
                     </button>
-                    <button class="button-pushback" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow?" >
+                    <button class="button-pushback today" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow?" >
                         tmrw
                     </button>
                 </details>
@@ -158,7 +158,7 @@ pub async fn check_task(
         .unwrap()
         .unwrap();
 
-    let mut headers = HeaderMap::new();
+    let headers = HeaderMap::new();
     // headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
     (headers, task.html())
 }
@@ -175,37 +175,36 @@ pub async fn pushback_task(
     let id = form.get("id").unwrap().clone();
 
     let conn = pool.get().await.unwrap();
-    let task: Task = conn
-        .interact(move |conn| {
-            let mut task = conn.query_row(
-                "SELECT rowid, text, date, checked FROM tasks WHERE rowid = ?1",
-                [id.clone()],
-                |row| {
-                    Ok(Task {
-                        id: row.get(0)?,
-                        text: row.get(1)?,
-                        date: row.get(2)?,
-                        checked: row.get(3)?,
-                    })
-                },
-            )?;
+    conn.interact(move |conn| {
+        let mut task = conn.query_row(
+            "SELECT rowid, text, date, checked FROM tasks WHERE rowid = ?1",
+            [id.clone()],
+            |row| {
+                Ok(Task {
+                    id: row.get(0)?,
+                    text: row.get(1)?,
+                    date: row.get(2)?,
+                    checked: row.get(3)?,
+                })
+            },
+        )?;
 
-            task.date = user.tomorrow();
+        task.date = user.tomorrow();
 
-            conn.execute(
-                "UPDATE tasks SET date = ?1 WHERE rowid = ?2",
-                (task.date, id),
-            )?;
+        conn.execute(
+            "UPDATE tasks SET date = ?1 WHERE rowid = ?2",
+            (task.date, id),
+        )?;
 
-            SqlRes::Ok(task)
-        })
-        .await
-        .unwrap()
-        .unwrap();
+        SqlRes::Ok(())
+    })
+    .await
+    .unwrap()
+    .unwrap();
 
     let mut headers = HeaderMap::new();
-    // headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
-    (headers)
+    headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
+    headers
 }
 
 #[derive(Deserialize)]

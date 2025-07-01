@@ -107,13 +107,6 @@ pub async fn new_user(
         .unwrap()
         .unwrap();
 
-    let user = User {
-        id: u64::from(rowid),
-        pass,
-        timezone,
-    };
-
-    dbg!(jar.get("id"));
     session_login(pool, rowid, &mut jar).await;
 
     let mut map = HeaderMap::new();
