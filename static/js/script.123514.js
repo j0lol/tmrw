@@ -42,8 +42,8 @@ autoWidthTemplate.innerHTML = `
       visibility: hidden;
       white-space: pre-wrap;
       font: inherit;
-      text-wrap: nowrap;
       pointer-events: none;
+      overflow-wrap: anywhere;
       touch-action: none; /* these two rules are just in case*/ 
       z-index: -99; /* prevents inputs */
     }

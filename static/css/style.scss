@@ -182,7 +182,7 @@ article {
         margin: 0;
         margin-left: calc(var(--text-start) + var(--rule-start));
         margin-top: 2px;
-
+        align-items: baseline;
         gap: 0.5rem;
     }
 

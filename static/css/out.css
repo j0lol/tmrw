@@ -129,6 +129,7 @@ article {
   margin: 0;
   margin-left: calc(var(--text-start)  + var(--rule-start));
   flex-direction: row;
+  align-items: baseline;
   gap: .5rem;
   margin-top: 2px;
   display: flex;
