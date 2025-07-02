@@ -63,12 +63,14 @@
 
     <div class="card-body today">
         <ul hx-get="/task/list?when=today"
-            hx-trigger="taskCreated from:body, taskDeleted from:body, login from:body, load" hx-swap="innerHTML"></ul>
+            hx-trigger="taskCreated from:body, taskDeleted from:body,taskUpdated from:body, login from:body, load"
+            hx-swap="innerHTML"></ul>
     </div>
 
 
     <div class="card-body tomorrow">
         <ul hx-get="/task/list?when=tomorrow"
-            hx-trigger="taskCreated from:body, taskDeleted from:body, login from:body, load" hx-swap="innerHTML"></ul>
+            hx-trigger="taskCreated from:body, taskDeleted from:body, taskUpdated from:body, login from:body, load"
+            hx-swap="innerHTML"></ul>
     </div>
 </article>

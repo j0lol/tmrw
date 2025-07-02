@@ -185,7 +185,8 @@ article {
 }
 
 .card-body ul .list-item li {
-  word-break: break-all;
+  word-break: normal;
+  overflow-wrap: anywhere;
   padding-inline-start: calc(var(--text-start)  + var(--rule-start));
   list-style-type: none;
   position: relative;
@@ -208,6 +209,12 @@ article {
   flex-direction: row;
   gap: .5rem;
   display: inline-flex;
+}
+
+@supports ((-moz-appearance: none)) {
+  .card-body ul .list-item li details {
+    display: ruby !important;
+  }
 }
 
 .card-body ul .list-item li summary {

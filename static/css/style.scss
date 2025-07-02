@@ -248,10 +248,10 @@ article {
             li {
                 position: relative;
                 list-style-type: none;
-                word-break: break-all;
 
                 padding-inline-start: calc(var(--text-start) + var(--rule-start));
-
+                word-break: normal;
+                overflow-wrap: anywhere;
 
                 button,
                 details {
@@ -270,6 +270,17 @@ article {
                 }
 
                 details {
+
+                    /* Current bug on stable firefox, fixed on nightly. */
+                    /* Revert in 2027 or something */
+                    /* REPRODUCE: ff macOS 140.0.2 (aarch64) */
+                    /* <3 */
+                    @supports (-moz-appearance:none) {
+                        & {
+                            display: ruby !important;
+                        }
+                    }
+
                     display: inline-flex;
                     flex-direction: row;
                     gap: 0.5rem;
