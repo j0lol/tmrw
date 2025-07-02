@@ -20,6 +20,8 @@ struct Task {
 
 impl Task {
     fn html(&self) -> String {
+        let text = ammonia::clean_text(&self.text);
+
         format!(
             r#"
             <div class="list-item">
@@ -44,7 +46,7 @@ impl Task {
                 "task-label"
             },
             self.id,
-            self.text,
+            text,
             self.id,
             self.id,
         )

@@ -53,9 +53,9 @@
             hx-on::after-request="if(event.detail.successful) this.reset()">
             <input id="input-when" name="when" type="hidden" value="today" />
             <label>I will...
-                <input required size="20" name="text" type="text" placeholder="do good" /></label>
-            &nbsp;
-            <button>[Ok]</button>
+                <autowidth-input placeholder='do good' name="text" required></autowidth-input>
+                &nbsp;
+                <button>[Ok]</button>
         </form>
 
 

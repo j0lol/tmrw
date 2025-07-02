@@ -184,10 +184,10 @@ article {
         margin-top: 2px;
     }
 
-    input {
+    autowidth-input {
         font-size: 16px;
-        margin-right: 1rem;
-        max-width: 15ch;
+        min-width: 5ch;
+        max-width: 30ch;
     }
 
     button,
@@ -318,6 +318,11 @@ article {
             "SPAC" 0;
 
         font-synthesis: none;
+    }
+
+    select,
+    button {
+        color: light-dark(black, white);
     }
 
 }

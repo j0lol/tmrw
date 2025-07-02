@@ -17,6 +17,7 @@ chrono-tz = { version = "0.10.3", features = ["serde"] }
 rand = "0.9.1"
 axum-cookie = "0.2.3"
 turf = "0.10.1"
+ammonia = "4.1.0"
 
 [package.metadata.turf]
 minify = false

@@ -133,9 +133,9 @@ article {
   display: flex;
 }
 
-.card input {
-  max-width: 15ch;
-  margin-right: 1rem;
+.card autowidth-input {
+  min-width: 5ch;
+  max-width: 30ch;
   font-size: 16px;
 }
 
@@ -233,4 +233,8 @@ article {
   font-family: Shantell Sans, cursive;
   font-style: normal;
   font-weight: 400;
+}
+
+.card-head select, .card-head button, .card select, .card button, .card-body select, .card-body button {
+  color: light-dark(#000, #fff);
 }
