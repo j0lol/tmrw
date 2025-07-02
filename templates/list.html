@@ -52,10 +52,10 @@
         <form class="addtodo" hx-post="/task/new" hx-swap="none"
             hx-on::after-request="if(event.detail.successful) this.reset()">
             <input id="input-when" name="when" type="hidden" value="today" />
-            <label>I will...
-                <autowidth-input placeholder='do good' name="text" required></autowidth-input>
-                &nbsp;
-                <button>[Ok]</button>
+            <label for="addtodoinput">I will...</label>
+
+            <autowidth-input id="addtodoinput" placeholder='do good' name="text" required></autowidth-input>
+            <button>[Ok]</button>
         </form>
 
 

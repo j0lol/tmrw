@@ -182,12 +182,15 @@ article {
         margin: 0;
         margin-left: calc(var(--text-start) + var(--rule-start));
         margin-top: 2px;
+
+        gap: 0.5rem;
     }
 
     autowidth-input {
         font-size: 16px;
-        min-width: 5ch;
-        max-width: 30ch;
+        min-width: 5.8ch;
+        max-width: 17ch;
+        margin: 2px 0 -2px;
     }
 
     button,
