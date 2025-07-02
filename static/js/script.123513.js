@@ -49,6 +49,7 @@ autoWidthTemplate.innerHTML = `
       min-width: 6ch;
       position: absolute;
       border: 0;
+      padding: 0; /* for iOS */
       background: none;
     }
   </style>
