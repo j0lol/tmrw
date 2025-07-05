@@ -11,7 +11,6 @@ tokio = { version = "1.45.1", features = ["full"] }
 tower-http = { version = "0.6.6", features = ["fs"] }
 deadpool-sqlite = { version = "0.11.0", features = ["bundled", "modern-full"] }
 chrono = { version = "0.4.41", features = ["now"] }
-# tower-sessions = "0.14.0"
 random_word = { version = "0.5.0", features = ["en"] }
 chrono-tz = { version = "0.10.3", features = ["serde"] }
 rand = "0.9.1"
