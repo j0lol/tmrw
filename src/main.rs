@@ -33,7 +33,7 @@ async fn main() -> Res<()> {
 
     let _css = turf::style_sheet_values!("./static/css/style.scss").0;
 
-    let env = template();
+    let env = jinja_env();
 
     let cfg = Config::new("db.sqlite3");
     let pool = cfg.create_pool(Runtime::Tokio1).unwrap();
@@ -74,10 +74,10 @@ async fn main() -> Res<()> {
     let app = Router::new()
         .route("/", get(index))
         .route("/task/new", post(new_task))
-        .route("/task/delete", get(delete_task))
-        .route("/task/list", get(tasks))
-        .route("/task/complete", get(check_task))
-        .route("/task/pushback", get(pushback_task))
+        .route("/task/delete", post(delete_task))
+        .route("/task/list", post(tasks))
+        .route("/task/complete", post(check_task))
+        .route("/task/pushback", post(pushback_task))
         .route("/user/new", post(new_user))
         .route("/user/login", post(login))
         .route("/htmx/user_slug", get(user_slug))
@@ -96,11 +96,10 @@ async fn main() -> Res<()> {
     Ok(())
 }
 
-fn template() -> Environment<'static> {
+fn jinja_env() -> Environment<'static> {
     let mut env = Environment::new();
 
     env.set_loader(path_loader("templates"));
-
     env
 }
 

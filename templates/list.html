@@ -1,21 +1,3 @@
-<script type="text/hyperscript">
-  def today(i)
-    tell #main
-    set @day to "today"
-
-    tell #input-when
-    set @value to "today"
-  end
-
-  def tomorrow(i)
-    tell #main
-    set @day to "tomorrow"
-
-    tell #input-when
-    set @value to "tomorrow"
-  end
-</script>
-
 <style>
     article[day="today"] {
         .tomorrow {
@@ -33,24 +15,15 @@
 
     <div class="card-head">
         <div role="tablist" class="headercontainer">
-            <button active role="tab" class="header-today" _="
-                on click today()
-                add @active
-                tell next <button/>
-                remove @active">Today</button>
-            <button role="tab" class="header-tomorrow" _="
-                on click tomorrow()
-                add @active
-                tell previous <button/>
-                remove @active">
+            <button active role="tab" class="header-today">Today</button>
+            <button role="tab" class="header-tomorrow">
                 Tomorrow
             </button>
         </div>
     </div>
 
     <div class="card">
-        <form class="addtodo" hx-post="/task/new" hx-swap="none"
-            hx-on::after-request="if(event.detail.successful) this.reset()">
+        <form class="addtodo">
             <input id="input-when" name="when" type="hidden" value="today" />
             <label for="addtodoinput">I will...</label>
 
@@ -62,15 +35,31 @@
     </div>
 
     <div class="card-body today">
-        <ul hx-get="/task/list?when=today"
-            hx-trigger="taskCreated from:body, taskDeleted from:body,taskUpdated from:body, login from:body, load"
-            hx-swap="innerHTML"></ul>
+        <ul>
+            {% for task in today %}
+            {% set message = task.text %}
+            <task-item task_id="{{ task.id }}" day="today" {% if task.checked %}checked{% endif %}>
+                <template shadowrootmode="closed">
+                    {% include "components/task-item.html"%}
+                </template>
+                <span slot="message">{{ task.text }}</span>
+            </task-item>
+            {% endfor %}
+        </ul>
     </div>
 
 
     <div class="card-body tomorrow">
-        <ul hx-get="/task/list?when=tomorrow"
-            hx-trigger="taskCreated from:body, taskDeleted from:body, taskUpdated from:body, login from:body, load"
-            hx-swap="innerHTML"></ul>
+        <ul>
+            {% for task in tomorrow %}
+            {% set message = task.text %}
+            <task-item task_id="{{ task.id }}" day="tomorrow" {% if task.checked %}checked{% endif %}>
+                <template shadowrootmode="closed">
+                    {% include "components/task-item.html"%}
+                </template>
+                <span slot="message">{{ task.text }}</span>
+            </task-item>
+            {% endfor %}
+        </ul>
     </div>
 </article>

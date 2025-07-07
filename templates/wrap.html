@@ -6,28 +6,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Selfhosted JS -->
-    <script src="/static/js/npm/htmx.min.js"></script> <!-- https://www.npmjs.com/package/htmx.org -->
-    <script src="/static/js/npm/hyperscript.min.js"></script> <!-- hyperscript -->
-
-    <!-- I hate the current Cookie API, and the new one is secure-context only -->
+    <!-- Cosmetics -->
+    <link rel="icon" href="/static/img/favicon.ico" sizes="any" /> <!-- 32×32 -->
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" /> <!-- 180×180 -->
+    <link rel="manifest" href="/static/meta/manifest.webmanifest"> <!-- PWA metadata -->
 
     <!-- local styles -->
     <link rel="stylesheet" href="/static/css/out.css" />
     <link rel="stylesheet" href="/static/css/basic.css" />
 
-    <script type="module" src="/static/js/modules/components.js"></script>
-    <script type="module" src="/static/js/modules/user.js"></script>
+    <!-- Preloads -->
+    <link rel="modulepreload" href="/static/js/main.js" />
+    <link rel="modulepreload" href="/static/js/modules/add-todo.js" />
+    <link rel="modulepreload" href="/static/js/modules/component-element.js" />
+    <link rel="modulepreload" href="/static/js/modules/components.js" />
+    <link rel="modulepreload" href="/static/js/modules/header-nav.js" />
+    <link rel="modulepreload" href="/static/js/modules/user.js" />
+    <link rel="modulepreload" href="/static/js/custom-elements/task-item.js" />
 
-    <!-- 32×32 -->
-    <link rel="icon" href="/static/img/favicon.ico" sizes="any" />
-    <!-- 180×180 -->
-    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png" />
+    <script type="module" src="/static/js/main.js">
+    </script>
 
-    <!-- PWA metadata -->
-    <link rel="manifest" href="/static/meta/manifest.webmanifest">
 
-    <meta name="htmx-config" content='{"requestClass": "is-loading"}' />
     {% block head_extra %}{% endblock %}
 
     <title>{% block title %}TMRW{% endblock %}</title>
@@ -35,6 +35,8 @@
 </head>
 
 <body>
+    {% include "component-import.html" %}
+
     <div class="wrapper">
         {% block content %}🌵🏜️{% endblock %} {% block footer %}
         {% endblock %}

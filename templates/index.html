@@ -5,7 +5,9 @@ content %}
     <header>
         <details>
             <summary>Authentication</summary>
-            <div hx-get="/htmx/user_slug" hx-trigger="login from:body, load" hx-swap="innerHTML"></div>
+            <div hx-get="/htmx/user_slug" hx-trigger="login from:body, load" hx-swap="innerHTML">
+                dont push to prod!
+            </div>
             <br />
             <form hx-post="/user/login" hx-swap="none">
                 <label>Login with code: <br /><input name="pass" /></label>

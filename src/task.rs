@@ -1,19 +1,21 @@
 use std::collections::HashMap;
 
 use axum::{
-    Form,
+    Form, Json,
     extract::State,
     http::{HeaderMap, HeaderValue},
     response::{Html, IntoResponse},
 };
 use axum_cookie::CookieManager;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{SqlRes, session::session, state::Spool};
 
-struct Task {
+#[derive(Serialize)]
+pub struct Task {
     id: u64,
     text: String,
+    #[serde(skip_serializing)]
     date: chrono::NaiveDate,
     checked: bool,
 }
@@ -24,31 +26,11 @@ impl Task {
 
         format!(
             r#"
-            <div class="list-item">
-            <li hx-target="this" hx-swap="outerHTML">
-                <span class="{}" hx-get="/task/complete?id={}">{}</span> &nbsp;
-
-                <details name="edit">
-                    <summary>edit</summary>
-                    <button class="button-delete" hx-get="/task/delete?id={}" hx-confirm="Are you sure you want to *delete* this item?" >
-                        del
-                    </button>
-                    <button class="button-pushback today" hx-get="/task/pushback?id={}" hx-confirm="Are you sure you want to move this item to tomorrow?" >
-                        tmrw
-                    </button>
-                </details>
-            </li>
-            </div>
+            <task-item {}message="{}" task_id="{}"></task-item>
             "#,
-            if self.checked {
-                "task-label checked"
-            } else {
-                "task-label"
-            },
-            self.id,
+            if self.checked { "checked " } else { "" },
             text,
-            self.id,
-            self.id,
+            self.id
         )
     }
 }
@@ -87,21 +69,30 @@ pub async fn new_task(
     };
 
     let conn = pool.get().await.unwrap();
-    conn.interact(move |conn| {
-        conn.execute(
-            "INSERT INTO tasks (text, date, user) VALUES (?1, ?2, ?3)",
-            (text, date, user.id),
-        )?;
+    let task = conn
+        .interact(move |conn| {
+            let task = conn.query_row(
+                "INSERT INTO tasks (text, date, user) VALUES (?1, ?2, ?3) RETURNING rowid, CAST(text as TEXT), date, checked",
+                (text, date, user.id),
+                |row| {
+                    Ok(Task {
+                        id: row.get(0)?,
+                        text: row.get(1)?,
+                        date: row.get(2)?,
+                        checked: row.get(3)?,
+                    })
+                },
+            )?;
 
-        SqlRes::Ok(())
-    })
-    .await
-    .unwrap()
-    .unwrap();
+            SqlRes::Ok(task)
+        })
+        .await
+        .unwrap()
+        .unwrap();
 
     let mut headers = HeaderMap::new();
     headers.insert("HX-Trigger", HeaderValue::from_static("taskCreated"));
-    headers
+    (headers, Json(serde_json::to_string(&task).unwrap()))
 }
 
 pub async fn delete_task(
@@ -135,7 +126,7 @@ pub async fn check_task(
     let task: Task = conn
         .interact(move |conn| {
             let mut task = conn.query_row(
-                "SELECT rowid, text, date, checked FROM tasks WHERE rowid = ?1",
+                "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE rowid = ?1",
                 [id.clone()],
                 |row| {
                     Ok(Task {
@@ -162,7 +153,7 @@ pub async fn check_task(
 
     let headers = HeaderMap::new();
     // headers.insert("HX-Trigger", HeaderValue::from_static("taskUpdated"));
-    (headers, task.html())
+    (headers)
 }
 
 pub async fn pushback_task(
@@ -179,7 +170,7 @@ pub async fn pushback_task(
     let conn = pool.get().await.unwrap();
     conn.interact(move |conn| {
         let mut task = conn.query_row(
-            "SELECT rowid, text, date, checked FROM tasks WHERE rowid = ?1",
+            "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE rowid = ?1",
             [id.clone()],
             |row| {
                 Ok(Task {
@@ -212,7 +203,55 @@ pub async fn pushback_task(
 #[derive(Deserialize)]
 pub struct ListTasks {
     #[serde(rename = "when")]
-    when: TaskWhen,
+    pub when: TaskWhen,
+}
+
+pub async fn tasks_internal(State(pool): Spool, jar: CookieManager, form: ListTasks) -> Vec<Task> {
+    let (user, _jar) = session(State(pool.clone()), jar).await;
+
+    let user = user.expect("Unauthenticated!");
+
+    let date = match form.when {
+        TaskWhen::Today => user.today(),
+        TaskWhen::Tomorrow => user.tomorrow(),
+    };
+
+    let user_id = user.id;
+    let conn = pool.get().await.unwrap();
+    let tasks = conn
+        .interact(move |conn| {
+            let mut stmt = conn.prepare(
+                    match form.when {
+                        TaskWhen::Today => {
+                            "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE date <= ?1 AND user = ?2"
+
+                        },
+                        TaskWhen::Tomorrow => {
+                            "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE date = ?1 AND user = ?2"
+
+                        }
+                    }
+                // "SELECT rowid, text, date, checked FROM tasks WHERE date = ?1 AND user = ?2",
+            )?;
+
+            let tasks: SqlRes<Vec<Task>> = stmt
+                .query_map((date, user_id), |row| {
+                    Ok(Task {
+                        id: row.get(0)?,
+                        text: row.get(1)?,
+                        date: row.get(2)?,
+                        checked: row.get(3)?,
+                    })
+                })?
+                .collect();
+
+            SqlRes::Ok(tasks.unwrap())
+        })
+        .await
+        .unwrap()
+        .unwrap();
+
+    tasks
 }
 
 pub async fn tasks(
@@ -236,11 +275,11 @@ pub async fn tasks(
             let mut stmt = conn.prepare(
                     match form.when {
                         TaskWhen::Today => {
-                            "SELECT rowid, text, date, checked FROM tasks WHERE date <= ?1 AND user = ?2"
+                            "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE date <= ?1 AND user = ?2"
 
                         },
                         TaskWhen::Tomorrow => {
-                            "SELECT rowid, text, date, checked FROM tasks WHERE date = ?1 AND user = ?2"
+                            "SELECT rowid, CAST(text as TEXT), date, checked FROM tasks WHERE date = ?1 AND user = ?2"
 
                         }
                     }

@@ -1,0 +1,139 @@
+<div class="list-item">
+    <li>
+        <slot class="message" name="message">You're holding it wrong.</slot> &nbsp;
+
+        <details name="edit">
+            <summary>edit</summary>
+
+            <button class="button-delete">
+                del
+            </button>
+            <button class="button-pushback today">
+                tmrw
+            </button>
+        </details>
+    </li>
+</div>
+
+<style>
+    .list-item[checked] ::slotted(span),
+    task-item[checked] ::slotted(span) {
+        text-decoration: line-through;
+    }
+
+    .list-item[day="tomorrow"] .today,
+    task-item[day="tomorrow"] .today {
+        display: none;
+    }
+
+
+
+    /* Background Definition */
+    .list-item {
+        --rule-color: light-dark(#abced4, #c86363);
+        --line-height: 21px;
+
+        /* https://projects.verou.me/css3patterns/#lined-paper */
+        background-color: light-dark(white, black);
+        background-image:
+            linear-gradient(90deg,
+                transparent var(--rule-start),
+                var(--rule-color) var(--rule-start),
+                var(--rule-color) calc(var(--rule-start) + 2px),
+                transparent calc(var(--rule-start) + 2px)),
+            linear-gradient(light-dark(#eee, #333) 0.1em, transparent 0.1em);
+        background-size: 100% var(--line-height);
+        background-position: 0px 17px;
+
+    }
+
+    .list-item {
+        font-family: var(--font);
+        position: relative;
+        display: block;
+
+
+
+        &:after {
+            content: '◦';
+            position: absolute;
+            left: 18px;
+            top: -3px;
+        }
+
+        li {
+            position: relative;
+            list-style-type: none;
+
+            padding-inline-start: calc(var(--text-start) + var(--rule-start));
+            word-break: normal;
+            overflow-wrap: anywhere;
+
+            button,
+            details {
+                color: light-dark(gray, lightgray);
+                font-size: 10pt;
+                font-weight: lighter;
+                font-family: var(--font);
+            }
+
+            button,
+            input,
+            form:not(.addtodo) {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                background: 0;
+            }
+
+            details {
+
+                /* Current bug on stable firefox, fixed on nightly. */
+                /* Revert in 2027 or something */
+                /* REPRODUCE: ff macOS 140.0.2 (aarch64) */
+                /* <3 */
+                @supports (-moz-appearance:none) {
+                    & {
+                        display: ruby !important;
+                    }
+                }
+
+                display: inline-flex;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+
+            summary {
+                cursor: pointer;
+                display: inline;
+            }
+
+            details[open] summary:after {
+                content: ":";
+            }
+        }
+    }
+
+    .is-loading::after {
+        content: "◌";
+        animation: spinner 4s linear infinite;
+
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes spinner {
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>

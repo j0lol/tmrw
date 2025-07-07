@@ -108,3 +108,7 @@ article {
         transform: rotate(360deg);
     }
 }
+
+task-item {
+    --font: "Shantell Sans", cursive;
+}
