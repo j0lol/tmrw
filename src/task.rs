@@ -206,10 +206,18 @@ pub struct ListTasks {
     pub when: TaskWhen,
 }
 
-pub async fn tasks_internal(State(pool): Spool, jar: CookieManager, form: ListTasks) -> Vec<Task> {
+pub struct Unauthenticated;
+
+pub async fn tasks_internal(
+    State(pool): Spool,
+    jar: CookieManager,
+    form: ListTasks,
+) -> Result<Vec<Task>, Unauthenticated> {
     let (user, _jar) = session(State(pool.clone()), jar).await;
 
-    let user = user.expect("Unauthenticated!");
+    let Some(user) = user else {
+        return Err(Unauthenticated);
+    };
 
     let date = match form.when {
         TaskWhen::Today => user.today(),
@@ -251,7 +259,7 @@ pub async fn tasks_internal(State(pool): Spool, jar: CookieManager, form: ListTa
         .unwrap()
         .unwrap();
 
-    tasks
+    Ok(tasks)
 }
 
 pub async fn tasks(

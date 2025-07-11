@@ -72,21 +72,9 @@ article {
     box-sizing: border-box;
 }
 
-.otherheading,
-.firstheading {
-    font-weight: 500;
-}
-
-.task-label.checked {
-    text-decoration: line-through;
-    text-decoration-style: solid;
-    text-decoration-thickness: 2px;
-}
-
 .is-loading::after {
     content: "◌";
     animation: 4s linear 0s infinite running spinner, 0.25s ease-in 0s 1 running fade-in;
-
 }
 
 @keyframes fade-in {
@@ -111,4 +99,153 @@ article {
 
 task-item {
     --font: "Shantell Sans", cursive;
+}
+
+/* Page styling */
+
+article {
+    flex-direction: column;
+    display: flex;
+}
+
+.card-head {
+    --rule-start: 2rem;
+    --text-start: .3rem;
+    background-color: light-dark(#fff, #000);
+    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+    background-size: 100% 2.6rem;
+    height: 3.9rem;
+    padding-top: 1.3rem;
+}
+
+.card-head .headercontainer {
+    margin-left: calc(var(--text-start) + var(--rule-start));
+    gap: .5em;
+}
+
+.card-head .headercontainer button {
+    background: 0;
+    border: 0;
+    margin: -2px 0 0;
+    padding: 0;
+    font-size: 32px;
+    line-height: 1.3;
+    text-decoration: underline;
+}
+
+.card-head .headercontainer button:before,
+.card-head .headercontainer button:after {
+    content: "";
+    width: 0;
+    height: 0;
+    display: block;
+}
+
+.card-head .headercontainer button:before {
+    margin-bottom: -.3em;
+}
+
+.card-head .headercontainer button:after {
+    margin-top: -.3em;
+}
+
+.card-head .headercontainer button:not([active]) {
+    color: gray;
+    font-style: italic;
+}
+
+.card-head .headercontainer {
+    display: inline-flex;
+}
+
+.card {
+    --rule-start: 2rem;
+    --text-start: .3rem;
+    background-color: light-dark(#fff, #000);
+    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+    background-size: 100% 21px;
+    height: 42px;
+    position: relative;
+}
+
+.card li,
+.card label,
+.card form.addtodo button {
+    margin: 2px 0 -2px;
+    font-size: 16px;
+}
+
+.card button {
+    cursor: pointer;
+}
+
+.card p,
+.card form.addtodo {
+    margin: 0;
+    margin-left: calc(var(--text-start) + var(--rule-start));
+    flex-direction: row;
+    align-items: baseline;
+    gap: .5rem;
+    margin-top: 2px;
+    display: flex;
+}
+
+.card autowidth-input {
+    min-width: 5.8ch;
+    max-width: 17ch;
+    margin: 2px 0 -2px;
+    font-size: 16px;
+}
+
+.card button,
+.card input,
+.card form:not(.addtodo) {
+    background: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body {
+    --rule-start: 2rem;
+    --text-start: .3rem;
+    background-color: light-dark(#fff, #000);
+    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-top: 4px;
+    padding-bottom: 17px;
+}
+
+.card-body ul {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.card-head,
+.card-head input,
+.card-head button,
+.card,
+.card input,
+.card button,
+.card-body,
+.card-body input,
+.card-body button {
+    font-optical-sizing: auto;
+    font-variation-settings: "BNCE" 0, "INFM" 0, "SPAC" 0;
+    font-synthesis: none;
+    font-family: Shantell Sans, cursive;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.card-head select,
+.card-head button,
+.card select,
+.card button,
+.card-body select,
+.card-body button {
+    color: light-dark(#000, #fff);
 }

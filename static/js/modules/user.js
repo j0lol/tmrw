@@ -15,7 +15,8 @@ async function check_invalidate() {
     if (invalidate_cookie?.value === "true") {
         await new_user();
         await cookieStore.delete("invalidate");
-        htmx.trigger("body", "login", {});
+
+        window.location.reload();
     }
 }
 

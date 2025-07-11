@@ -18,7 +18,8 @@ pub async fn index(jar: CookieManager, State(env): Senv, State(pool): Spool) -> 
             when: TaskWhen::Today,
         },
     )
-    .await;
+    .await
+    .unwrap_or_default();
     let tomorrow = tasks_internal(
         State(pool),
         jar,
@@ -26,7 +27,8 @@ pub async fn index(jar: CookieManager, State(env): Senv, State(pool): Spool) -> 
             when: TaskWhen::Tomorrow,
         },
     )
-    .await;
+    .await
+    .unwrap_or_default();
 
     let out = out(&env, "index.html", context! { user, today, tomorrow }).unwrap();
 

@@ -5,11 +5,27 @@ content %}
     <header>
         <details>
             <summary>Authentication</summary>
-            <div hx-get="/htmx/user_slug" hx-trigger="login from:body, load" hx-swap="innerHTML">
-                dont push to prod!
-            </div>
+            <script type="module">
+                const span = document.querySelector("#authentication_span");
+
+                const req = await fetch("/user/info", { method: "POST" });
+
+                if (req.ok) {
+                    const user = await req.json();
+
+                    const body = `You are logged in. Your user ID is ${user.id}. 
+                        <br> You are in timezone ${user.timezone}. 
+                        <br><br> Your login code is <samp><input value=\"${user.pass}\" readonly></samp>. 
+                        <br> Use this to log in on other devices. If you want to ensure your tasks are saved, write this code down.`;
+                    span.innerHTML = body;
+                } else {
+                    const body = `You are not logged in`;
+                    span.innerHTML = body;
+                }
+            </script>
+            <span id="authentication_span"></span>
             <br />
-            <form hx-post="/user/login" hx-swap="none">
+            <form method="POST" action="/user/login" id="user-login">
                 <label>Login with code: <br /><input name="pass" /></label>
                 <br /><button>Ok</button>
             </form>
@@ -45,7 +61,6 @@ content %}
             <p>Acknowledgements:</p>
             <ul>
                 <li>Axum for a lovely Rust web server.</li>
-                <li>HTMX for dead easy single-page-app prototyping.</li>
                 <li>
                     This lovely paper background.
                     <a href="https://projects.verou.me/css3patterns/#lined-paper">Thanks!</a>

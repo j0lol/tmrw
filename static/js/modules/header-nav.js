@@ -3,7 +3,6 @@ const btn_tomorrow = document.querySelector("button.header-tomorrow");
 const main = document.querySelector("#main");
 const inp_when = document.querySelector("#input-when");
 
-console.log("hey");
 btn_today.addEventListener("click", toggle_today);
 btn_tomorrow.addEventListener("click", toggle_tomorrow);
 

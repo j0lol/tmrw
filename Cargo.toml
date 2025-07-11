@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = { version = "0.8.4", features = ["form", "json"] }
+axum = { version = "0.8.4", features = ["form", "json", "macros"] }
 minijinja = { version = "2.10.2", features = ["loader"] }
 serde = { version = "1.0.219", features = ["derive"] }
 tokio = { version = "1.45.1", features = ["full"] }
@@ -15,7 +15,6 @@ random_word = { version = "0.5.0", features = ["en"] }
 chrono-tz = { version = "0.10.3", features = ["serde"] }
 rand = "0.9.1"
 axum-cookie = "0.2.3"
-turf = "0.10.1"
 ammonia = "4.1.0"
 serde_json = "1.0.140"
 tower = "0.5.2"

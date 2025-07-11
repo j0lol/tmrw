@@ -2,12 +2,13 @@ use axum::{
     Form, Json,
     extract::State,
     http::{HeaderMap, HeaderValue, StatusCode},
-    response::Html,
+    response::{Html, Redirect},
 };
 use axum_cookie::CookieManager;
 use chrono::{DateTime, Days, NaiveDate, Utc};
 use chrono_tz::Tz;
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 
 use crate::{
     SqlRes,
@@ -53,7 +54,7 @@ pub async fn login(
     State(pool): Spool,
     jar: CookieManager,
     Form(payload): Form<Login>,
-) -> (HeaderMap, StatusCode) {
+) -> (HeaderMap, Redirect) {
     let (_, mut jar) = session(State(pool.clone()), jar).await;
 
     let conn = pool.get().await.unwrap();
@@ -73,7 +74,7 @@ pub async fn login(
     let mut map = HeaderMap::new();
     map.insert("HX-Trigger", HeaderValue::from_static("login"));
 
-    (map, StatusCode::OK)
+    (map, Redirect::to("/"))
 }
 
 #[derive(Deserialize)]
@@ -121,15 +122,20 @@ fn generate_password() -> String {
     [get_word(), get_word(), get_word(), get_word()].join(" ")
 }
 
-pub async fn user_slug(State(pool): Spool, jar: CookieManager) -> Html<String> {
+type MaybeJson<T> = Result<Json<T>, ()>;
+fn yes_json<T>(i: T) -> MaybeJson<T> {
+    Ok(axum::Json(i))
+}
+fn no_json<T>() -> MaybeJson<T> {
+    Err(())
+}
+
+pub async fn user_info(State(pool): Spool, jar: CookieManager) -> (StatusCode, MaybeJson<User>) {
     let (user, _jar) = session(State(pool), jar).await;
 
-    if let Some(user) = user {
-        Html(format!(
-            "You are logged in. Your user ID is {}. <br> You are in timezone {}. <br><br> Your login code is <samp><input value=\"{}\" readonly></samp>. <br> Use this to log in on other devices. If you want to ensure your tasks are saved, write this code down.",
-            user.id, user.timezone, user.pass
-        ))
-    } else {
-        Html("You are logged out".to_string())
-    }
+    let Some(user) = user else {
+        return (StatusCode::UNAUTHORIZED, no_json());
+    };
+
+    (StatusCode::OK, yes_json(user))
 }

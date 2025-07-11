@@ -1,61 +1,4 @@
-// Waiting for declarative-custom-elements ;w;
-// DSD has SSR benefits but makes more HTML duplication 
-// than I am comfortable with.
-//
-// Recommend using html/css tagged template literals
-// (eg) html`foo`, css`bar` with an extension for highlighting
-// VSCODE: `FAST Tagged Template Literals`
-// Dunno for any other IDEs yet, sorry.
-//
-// Yes, this is basically a light reimpl of Lit.
-class NonDeclarativeElement extends HTMLElement {
-    html = "";
-    css = "";
-    static name;
-    static attrs = [];
-
-    constructor() {
-        super();
-    }
-
-    start(shadow) {
-        // ...
-    }
-
-    connectedCallback() {
-        const shadow = this.attachShadow({ mode: "closed" });
-        shadow.innerHTML = `<style>
-            ${this.css.trim()}
-        </style>
-        ${this.html.trim()}`;
-
-        this.shadow = shadow;
-
-        this.start(shadow);
-    }
-
-
-
-    static get observedAttributes() {
-        return this.attrs;
-    }
-    attributeChangedCallback(property, oldValue, newValue) {
-        if (oldValue === newValue) return;
-        this[property] = newValue;
-    }
-
-    static define() {
-        if (this.name === undefined) {
-            console.warn("No template!");
-        }
-        customElements.define(this.name, this);
-    }
-}
-
-const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
-const css = (strings, ...values) => String.raw({ raw: strings }, ...values);
-
-
+// To be paired with a server-side rendering step.
 class DeclarativeElement extends HTMLElement {
     static element_name = "never";
 
@@ -121,4 +64,4 @@ class DeclarativeElement extends HTMLElement {
 }
 
 
-export { NonDeclarativeElement, html, css, DeclarativeElement };
+export { DeclarativeElement };

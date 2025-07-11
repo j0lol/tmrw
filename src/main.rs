@@ -2,7 +2,7 @@ use crate::{
     route::index,
     state::AppState,
     task::{check_task, delete_task, new_task, pushback_task, tasks},
-    user::{login, new_user, user_slug},
+    user::{login, new_user, user_info},
 };
 use axum::{
     Router,
@@ -30,8 +30,6 @@ async fn main() -> Res<()> {
         .unwrap_or("3000".to_string())
         .parse()
         .unwrap();
-
-    let _css = turf::style_sheet_values!("./static/css/style.scss").0;
 
     let env = jinja_env();
 
@@ -80,7 +78,7 @@ async fn main() -> Res<()> {
         .route("/task/pushback", post(pushback_task))
         .route("/user/new", post(new_user))
         .route("/user/login", post(login))
-        .route("/htmx/user_slug", get(user_slug))
+        .route("/user/info", post(user_info))
         .nest_service("/static", ServeDir::new("static"))
         .with_state(AppState { env, pool })
         .layer(CookieLayer::default());
