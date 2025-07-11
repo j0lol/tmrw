@@ -19,6 +19,7 @@
     .list-item[checked] ::slotted(span),
     task-item[checked] ::slotted(span) {
         text-decoration: line-through;
+        color: light-dark(gray, lightgray);
     }
 
     .list-item[day="tomorrow"] .today,
@@ -41,7 +42,7 @@
                 var(--rule-color) var(--rule-start),
                 var(--rule-color) calc(var(--rule-start) + 2px),
                 transparent calc(var(--rule-start) + 2px)),
-            linear-gradient(light-dark(#eee, #333) 0.1em, transparent 0.1em);
+            linear-gradient(light-dark(#eee, #333) 2px, transparent 2px);
         background-size: 100% var(--line-height);
         background-position: 0px 17px;
 
@@ -51,8 +52,6 @@
         font-family: var(--font);
         position: relative;
         display: block;
-
-
 
         &:after {
             content: '◦';

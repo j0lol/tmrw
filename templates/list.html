@@ -13,7 +13,7 @@
 </style>
 <article day="today" id="main">
 
-    <div class="card-head">
+    <div class="card-head ruled">
         <div role="tablist" class="headercontainer">
             <button active role="tab" class="header-today">Today</button>
             <button role="tab" class="header-tomorrow">
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card ruled">
         <form class="addtodo">
             <input id="input-when" name="when" type="hidden" value="today" />
             <label for="addtodoinput">I will...</label>
@@ -34,7 +34,7 @@
 
     </div>
 
-    <div class="card-body today">
+    <div class="card-body today ruled">
         <ul>
             {% for task in today %}
             {% set message = task.text %}
@@ -49,7 +49,7 @@
     </div>
 
 
-    <div class="card-body tomorrow">
+    <div class="card-body tomorrow ruled">
         <ul>
             {% for task in tomorrow %}
             {% set message = task.text %}

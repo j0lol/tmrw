@@ -66,9 +66,7 @@ footer {
 
 article {
     border: 2px solid light-dark(#eee, #333);
-    border-top: none;
-    border-bottom: none;
-    box-shadow: 3px 5px 5px light-dark(lightgray, rgb(59, 59, 59));
+    box-shadow: 3px 5px 5px light-dark(lightgray, hsl(250 15% 0% / 1));
     box-sizing: border-box;
 }
 
@@ -111,11 +109,27 @@ article {
 .card-head {
     --rule-start: 2rem;
     --text-start: .3rem;
-    background-color: light-dark(#fff, #000);
-    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
-    background-size: 100% 2.6rem;
+    --line-height: calc(2.6rem + 2px);
+
     height: 3.9rem;
     padding-top: 1.3rem;
+    background-position: 0px -2px;
+
+}
+
+.ruled {
+    --rule-color: light-dark(#abced4, #c86363);
+
+    /* https://projects.verou.me/css3patterns/#lined-paper */
+    background-color: light-dark(white, black);
+    background-image:
+        linear-gradient(90deg,
+            transparent var(--rule-start),
+            var(--rule-color) var(--rule-start),
+            var(--rule-color) calc(var(--rule-start) + 2px),
+            transparent calc(var(--rule-start) + 2px)),
+        linear-gradient(light-dark(#eee, #333) 2px, transparent 2px);
+    background-size: 100% var(--line-height);
 }
 
 .card-head .headercontainer {
@@ -161,9 +175,7 @@ article {
 .card {
     --rule-start: 2rem;
     --text-start: .3rem;
-    background-color: light-dark(#fff, #000);
-    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
-    background-size: 100% 21px;
+    --line-height: 21px;
     height: 42px;
     position: relative;
 }
@@ -209,10 +221,8 @@ article {
 .card-body {
     --rule-start: 2rem;
     --text-start: .3rem;
-    background-color: light-dark(#fff, #000);
-    background-image: linear-gradient(90deg, transparent var(--rule-start), light-dark(#abced4, #c86363) var(--rule-start), light-dark(#abced4, #c86363) calc(var(--rule-start) + 2px), transparent calc(var(--rule-start) + 2px)), linear-gradient(light-dark(#eee, #333) .1em, transparent .1em);
+    --line-height: 100%;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
     padding-top: 4px;
     padding-bottom: 17px;
 }
