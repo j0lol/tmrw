@@ -65,9 +65,14 @@ footer {
 
 
 article {
-    border: 2px solid light-dark(#eee, #333);
-    box-shadow: 3px 5px 5px light-dark(lightgray, hsl(250 15% 0% / 1));
+
     box-sizing: border-box;
+
+    filter: drop-shadow(3px 5px 5px light-dark(lightgray, hsl(250 15% 0% / 1)));
+}
+
+.card-body {
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 24px 100%;
 }
 
 .is-loading::after {
@@ -121,7 +126,7 @@ article {
     --rule-color: light-dark(#abced4, #c86363);
 
     /* https://projects.verou.me/css3patterns/#lined-paper */
-    background-color: light-dark(white, black);
+    background-color: light-dark(white, #141414);
     background-image:
         linear-gradient(90deg,
             transparent var(--rule-start),

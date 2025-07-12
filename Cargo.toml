@@ -4,27 +4,17 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = { version = "0.8.4", features = ["form", "json", "macros"] }
-minijinja = { version = "2.10.2", features = ["loader"] }
-serde = { version = "1.0.219", features = ["derive"] }
-tokio = { version = "1.45.1", features = ["full"] }
-tower-http = { version = "0.6.6", features = ["fs", "compression-gzip"] }
-deadpool-sqlite = { version = "0.11.0", features = ["bundled", "modern-full"] }
-chrono = { version = "0.4.41", features = ["now"] }
-random_word = { version = "0.5.0", features = ["en"] }
-chrono-tz = { version = "0.10.3", features = ["serde"] }
-rand = "0.9.1"
-axum-cookie = "0.2.3"
-ammonia = "4.1.0"
-serde_json = "1.0.140"
-tower = "0.5.2"
-
-[package.metadata.turf]
-minify = false
-load_paths = ["./static/css"]
-
-[package.metadata.turf.class_names]
-template = "<original_name>"
-
-[package.metadata.turf.file_output]
-global_css_file_path = "./static/css/out.css"
+axum = { version = "0.8", features = ["form", "json", "macros"] }
+minijinja = { version = "2", features = ["loader"] }
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+tower-http = { version = "0.6", features = ["fs", "compression-gzip"] }
+deadpool-sqlite = { version = "0.11", features = ["bundled", "modern-full"] }
+chrono = { version = "0.4", features = ["now"] }
+random_word = { version = "0.5", features = ["en"] }
+chrono-tz = { version = "0.10", features = ["serde"] }
+rand = "0.9"
+axum-cookie = "0.2"
+ammonia = "4"
+serde_json = "1"
+tower = "0.5"
